@@ -56,7 +56,7 @@ export default async function PostPage(props: PostPageProps) {
       <div className="flex justify-between items-center mb-6">
         <Link
           href="/dashboard"
-          className="text-blue-600 hover:text-blue-800 flex items-center"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
         >
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Dashboard
