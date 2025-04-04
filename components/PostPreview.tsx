@@ -11,6 +11,17 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({ post }: PostPreviewProps) {
+  // Preprocess content to handle code blocks that might be at the start
+  const preprocessContent = (content: string) => {
+    // Check if the content starts with a fenced code block that includes a language indicator
+    if (content.trim().startsWith('```')) {
+      // If it starts with ```html, ```markdown, etc., remove the language indicator
+      // and just keep it as a generic code block
+      return content.replace(/^```(html|markdown|typescript|javascript|css|json)/m, '```');
+    }
+    return content;
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
       <div className="mb-6">
@@ -40,7 +51,7 @@ export default function PostPreview({ post }: PostPreviewProps) {
           rehypePlugins={[rehypeRaw, rehypeHighlight]}
           remarkPlugins={[remarkGfm]}
         >
-          {post.content}
+          {preprocessContent(post.content)}
         </ReactMarkdown>
       </div>
     </div>

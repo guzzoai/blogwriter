@@ -163,21 +163,24 @@ function generateDemoContent(params: BlogGenerationParams) {
     content += "\n\n## Interactive Comparison Tool\n\n<div class='interactive-tool'>\n  <h3>Compare Your Options</h3>\n  <p>Use this interactive tool to compare different ${params.topic} options based on your specific needs.</p>\n  <div class='tool-placeholder'>[Interactive comparison tool would be rendered here]</div>\n</div>\n";
   }
 
+  // Ensure FAQ section is properly added at the end if requested
   if (params.faq) {
     content += "\n\n## Frequently Asked Questions (FAQ)\n\n";
-    content += "### What is the best " + params.topic + " for beginners?\n";
+    
+    // Each FAQ with proper markdown headings
+    content += "### What is the best " + params.topic + " for beginners?\n\n";
     content += "For beginners, we recommend [Product A] because it offers an intuitive interface, reliable performance, and excellent value for money. It has all the essential features without overwhelming new users.\n\n";
     
-    content += "### How much should I expect to spend on a quality " + params.topic + "?\n";
+    content += "### How much should I expect to spend on a quality " + params.topic + "?\n\n";
     content += "Quality " + params.topic + "s typically range from $50-$500, depending on features and brand. For most users, the sweet spot is around $150-$250, which offers a good balance of quality and affordability.\n\n";
     
-    content += "### Are expensive " + params.topic + "s worth the investment?\n";
+    content += "### Are expensive " + params.topic + "s worth the investment?\n\n";
     content += "Expensive " + params.topic + "s often include premium materials, extended warranties, and advanced features. Whether they're worth it depends on your specific needs. For professionals or heavy users, the investment may pay off in longevity and performance.\n\n";
     
-    content += "### How often should I replace my " + params.topic + "?\n";
+    content += "### How often should I replace my " + params.topic + "?\n\n";
     content += "Most quality " + params.topic + "s should last 3-5 years with proper care. High-end models may last even longer. Consider replacing when performance significantly declines or repair costs exceed 50% of a new purchase.\n\n";
     
-    content += "### What are the most important features to look for?\n";
+    content += "### What are the most important features to look for?\n\n";
     content += "The most important features depend on your specific needs, but generally look for durability, reliability, warranty coverage, customer support, and compatibility with your existing setup. For " + params.topic + "s, also consider [specific relevant features].\n";
   }
 
@@ -270,6 +273,48 @@ The blog post should be approximately ${params.wordCount} words and written in a
 `;
       break;
   }
+  
+  // Add optional elements based on parameters
+  let optionalElementsPrompt = '';
+  
+  if (params.firstPerson) {
+    optionalElementsPrompt += `
+- Use first-person perspective (I, my, me) throughout the article instead of the editorial we.
+`;
+  }
+  
+  if (params.hook) {
+    optionalElementsPrompt += `
+- Begin the article with a strong hook that captures attention immediately. This could be a surprising fact, a compelling question, or a bold statement related to ${params.topic}.
+`;
+  }
+  
+  if (params.storiesExamples) {
+    optionalElementsPrompt += `
+- Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
+`;
+  }
+  
+  if (params.interactiveElement) {
+    optionalElementsPrompt += `
+- Include HTML for an interactive element that enhances user engagement. This could be a simple comparison table, pros/cons list, or a feature checklist that adds value for the reader.
+`;
+  }
+  
+  if (params.faq) {
+    optionalElementsPrompt += `
+- IMPORTANT: Include a "Frequently Asked Questions" section at the end of the article with at least 5 common questions about ${params.topic} and detailed answers. Use "## Frequently Asked Questions (FAQ)" as the section heading followed by individual questions as "### [Question]?" format.
+- These questions should address common concerns, misconceptions, or decision points related to ${params.targetKeyword}.
+- Make the FAQ section helpful for users still in the research phase of the buying journey.
+`;
+  }
+  
+  // Add the optional elements if any exist
+  if (optionalElementsPrompt) {
+    typeSpecificPrompt += `
+# Optional Elements to Include (Required for this request):
+${optionalElementsPrompt}`;
+  }
 
   // Output format instructions
   const outputInstructions = `
@@ -282,6 +327,7 @@ The blog post should be approximately ${params.wordCount} words and written in a
 6. Include a conclusion section.
 7. Format the article with proper markdown, including bold, bullet points, and numbered lists where appropriate.
 8. Format any product recommendations with clear headings, brief descriptions, and placeholder links.
+9. IMPORTANT: Do NOT wrap the post in a \`\`\`markdown or \`\`\`html or any other code fence - output the actual Markdown directly.
 `;
 
   return basePrompt + typeSpecificPrompt + outputInstructions;
