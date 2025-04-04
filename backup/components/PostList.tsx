@@ -156,7 +156,7 @@ export default function PostList() {
       ) : (
         <div className="overflow-x-auto rounded-lg shadow">
           <table className="min-w-full divide-y">
-            <thead>
+            <thead className="bg-gray-100 dark:bg-gray-700">
               <tr>
                 <th
                   scope="col"
@@ -215,8 +215,12 @@ export default function PostList() {
               </tr>
             </thead>
             <tbody className="divide-y">
-              {sortedPosts.map((post) => (
-                <tr key={post.id} className="hover:bg-gray-50">
+              {sortedPosts.map((post, index) => (
+                <tr key={post.id} className={`hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors ${
+                  index % 2 === 0 
+                    ? 'bg-white dark:bg-gray-800' 
+                    : 'bg-gray-50 dark:bg-gray-700'
+                }`}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium">
                       <Link 
