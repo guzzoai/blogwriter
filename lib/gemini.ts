@@ -198,79 +198,87 @@ The blog post should be approximately ${params.wordCount} words and written in a
 
 # On-Page SEO Requirements:
 1. Title Tag:
-   - Must contain the main keyword "${params.targetKeyword}"
-   - Between 50-60 characters
-   - Include the year (2025)
-   - Include attractive adjectives
+   - Include the primary keyword "${params.targetKeyword}" near the beginning of the title.
+   - Keep the title under 60 characters.
+   - Make the title compelling and click-worthy.
 
 2. Meta Description:
-   - Must contain the main keyword and related terms
-   - Between 140-160 characters
-   - Include a call to action
+   - Include the primary keyword naturally.
+   - Keep it between 120-155 characters.
+   - Make it compelling and summarize the content.
 
-3. Heading Structure:
-   - H1: Contains the main keyword (only one H1)
-   - H2: Contains secondary keywords related to "${params.targetKeyword}"
-   - H3-H4: Contains long-tail keywords related to "${params.targetKeyword}"
+3. Content Structure:
+   - Use proper heading hierarchy (H1, H2, H3, H4) with keywords in headings.
+   - IMPORTANT: Use proper Markdown syntax for headings:
+     - # for H1 (main title only)
+     - ## for H2 (main sections)
+     - ### for H3 (subsections)
+     - #### for H4 (minor sections)
+   - Never write headings as plain text like "H3: Title" - always use proper Markdown format "### Title"
+   - Include the primary keyword in at least one H2 heading.
+   - Use bullet points and numbered lists where appropriate.
+   - Keep paragraphs short (3-4 sentences maximum).
+   - Bold important points and keywords.
 
-4. Content:
-   - Include the main keyword within the first 100 words
-   - Maintain natural keyword density (2-3%)
-   - Use synonyms and related terms
+4. Keyword Usage:
+   - Primary keyword: "${params.targetKeyword}" - include 3-5 times naturally.
+   - Use semantic variations and related terms.
+   - Avoid keyword stuffing.
+
+# Content Requirements:
+- Create valuable, informative content that helps the reader.
+- Include practical advice, tips, or recommendations.
+- Back claims with facts where possible.
+- Address common questions or concerns the audience might have.
 `;
 
-  // Add type-specific requirements
+  // Add type-specific prompt
   let typeSpecificPrompt = '';
-  
-  // Now, add optional elements based on parameters
-  let optionalElements = '';
-  
-  if (params.firstPerson) {
-    optionalElements += `
-Use first-person perspective (I, my, me) throughout the article instead of the editorial we.
-`;
-  }
-  
-  if (params.hook) {
-    optionalElements += `
-Begin the article with a strong hook that captures attention immediately. This could be a surprising fact, a compelling question, or a bold statement related to ${params.topic}.
-`;
-  }
-  
-  if (params.storiesExamples) {
-    optionalElements += `
-Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
-`;
-  }
-  
-  if (params.interactiveElement) {
-    optionalElements += `
-Include HTML for an interactive element that enhances user engagement. This could be a simple comparison table, pros/cons list, or a feature checklist that adds value for the reader.
-`;
-  }
-
-  if (params.faq) {
-    optionalElements += `
-Include a "Frequently Asked Questions" section at the end of the article with at least 5 common questions about ${params.topic} and detailed answers. These questions should address common concerns, misconceptions, or decision points related to ${params.targetKeyword}. Make the FAQ section helpful for users still in the research phase of the buying journey.
-`;
-  }
-
-  // Fill in the optional elements if any
-  if (optionalElements) {
-    typeSpecificPrompt += `
+  switch (params.type) {
+    case 'listicle':
+      typeSpecificPrompt = `
 # Additional Elements to Include:
-${optionalElements}
+- Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
 `;
+      break;
+
+    case 'how-to guide':
+      typeSpecificPrompt = `
+# Additional Elements to Include:
+- Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
+`;
+      break;
+
+    case 'anecdote':
+      typeSpecificPrompt = `
+# Additional Elements to Include:
+- Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
+`;
+      break;
+
+    case 'story':
+      typeSpecificPrompt = `
+# Additional Elements to Include:
+- Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
+`;
+      break;
+
+    default: // informational
+      typeSpecificPrompt = `
+# Additional Elements to Include:
+- Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
+`;
+      break;
   }
 
-  // Output instructions for formatting
+  // Output format instructions
   const outputInstructions = `
 # Output Format Instructions:
-1. Start the blog post with an H1 heading (using a single #) containing the title.
+1. Start with "# [Your Title]" for the main blog post title (H1).
 2. After the title, include "Meta Description: [your meta description]" 
 3. Then proceed with the blog post structure, using proper markdown heading levels.
-4. Include 2-4 sections with H2 headings.
-5. Use H3 and H4 for subsections as appropriate.
+4. Include 2-4 sections with H2 headings (## Heading).
+5. Use H3 headings (### Heading) and H4 headings (#### Heading) for subsections as appropriate.
 6. Include a conclusion section.
 7. Format the article with proper markdown, including bold, bullet points, and numbered lists where appropriate.
 8. Format any product recommendations with clear headings, brief descriptions, and placeholder links.
