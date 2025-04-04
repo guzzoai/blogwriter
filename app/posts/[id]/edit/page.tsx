@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye } from 'lucide-react';
 import { getPostById, hasSupabaseConfig } from '@/lib/db';
 import PostEditor from '@/components/PostEditor';
 
@@ -78,13 +78,23 @@ export default async function EditPostPage(props: EditPostPageProps) {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-6">
-        <Link
-          href={`/posts/${id}`}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to Post
-        </Link>
+        <div className="flex justify-between items-center">
+          <Link
+            href="/dashboard"
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back to Dashboard
+          </Link>
+          
+          <Link
+            href={`/posts/${id}`}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+          >
+            <Eye className="mr-2 h-5 w-5" />
+            View Post
+          </Link>
+        </div>
 
         <h1 className="text-3xl font-bold mt-4 mb-2">Edit Blog Post</h1>
         <p className="text-gray-600">
