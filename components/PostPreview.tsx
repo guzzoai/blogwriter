@@ -19,13 +19,13 @@ export default function PostPreview({ post }: PostPreviewProps) {
           <span className="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">
             {post.target_keyword}
           </span>
-          <span className="px-3 py-1 bg-gray-100 dark:bg-green-700 text-gray-800 dark:text-green-100 rounded-full text-sm">
+          <span className="px-3 py-1 bg-gray-100 dark:bg-green-200 text-gray-800 dark:text-green-800 rounded-full text-sm">
             {post.post_type}
           </span>
-          <span className="px-3 py-1 bg-gray-100 dark:bg-green-700 text-gray-800 dark:text-green-100 rounded-full text-sm">
+          <span className="px-3 py-1 bg-gray-100 dark:bg-green-200 text-gray-800 dark:text-green-800 rounded-full text-sm">
             {post.tone}
           </span>
-          <span className="px-3 py-1 bg-gray-100 dark:bg-green-700 text-gray-800 dark:text-green-100 rounded-full text-sm">
+          <span className="px-3 py-1 bg-gray-100 dark:bg-green-200 text-gray-800 dark:text-green-800 rounded-full text-sm">
             {post.word_count} words
           </span>
         </div>
