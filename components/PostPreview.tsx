@@ -1,6 +1,9 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
 import { BlogPost } from '@/lib/db';
 
 interface PostPreviewProps {
@@ -32,8 +35,13 @@ export default function PostPreview({ post }: PostPreviewProps) {
       </div>
 
       <div className="prose dark:prose-invert max-w-none">
-        {/* Render the content as markdown */}
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        {/* Render the content as markdown with HTML support */}
+        <ReactMarkdown
+          rehypePlugins={[rehypeRaw, rehypeHighlight]}
+          remarkPlugins={[remarkGfm]}
+        >
+          {post.content}
+        </ReactMarkdown>
       </div>
     </div>
   );
