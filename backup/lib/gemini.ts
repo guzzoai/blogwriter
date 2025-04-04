@@ -50,6 +50,7 @@ export interface BlogGenerationParams {
   storiesExamples: boolean;
   hook: boolean;
   interactiveElement: boolean;
+  faq: boolean;
 }
 
 export async function generateBlogPost(params: BlogGenerationParams) {
@@ -162,6 +163,24 @@ function generateDemoContent(params: BlogGenerationParams) {
     content += "\n\n## Interactive Comparison Tool\n\n<div class='interactive-tool'>\n  <h3>Compare Your Options</h3>\n  <p>Use this interactive tool to compare different ${params.topic} options based on your specific needs.</p>\n  <div class='tool-placeholder'>[Interactive comparison tool would be rendered here]</div>\n</div>\n";
   }
 
+  if (params.faq) {
+    content += "\n\n## Frequently Asked Questions (FAQ)\n\n";
+    content += "### What is the best " + params.topic + " for beginners?\n";
+    content += "For beginners, we recommend [Product A] because it offers an intuitive interface, reliable performance, and excellent value for money. It has all the essential features without overwhelming new users.\n\n";
+    
+    content += "### How much should I expect to spend on a quality " + params.topic + "?\n";
+    content += "Quality " + params.topic + "s typically range from $50-$500, depending on features and brand. For most users, the sweet spot is around $150-$250, which offers a good balance of quality and affordability.\n\n";
+    
+    content += "### Are expensive " + params.topic + "s worth the investment?\n";
+    content += "Expensive " + params.topic + "s often include premium materials, extended warranties, and advanced features. Whether they're worth it depends on your specific needs. For professionals or heavy users, the investment may pay off in longevity and performance.\n\n";
+    
+    content += "### How often should I replace my " + params.topic + "?\n";
+    content += "Most quality " + params.topic + "s should last 3-5 years with proper care. High-end models may last even longer. Consider replacing when performance significantly declines or repair costs exceed 50% of a new purchase.\n\n";
+    
+    content += "### What are the most important features to look for?\n";
+    content += "The most important features depend on your specific needs, but generally look for durability, reliability, warranty coverage, customer support, and compatibility with your existing setup. For " + params.topic + "s, also consider [specific relevant features].\n";
+  }
+
   return {
     title,
     content,
@@ -198,108 +217,64 @@ The blog post should be approximately ${params.wordCount} words and written in a
    - Include the main keyword within the first 100 words
    - Maintain natural keyword density (2-3%)
    - Use synonyms and related terms
-   - Create scannable content with bullets and lists
-   - Include comparison tables with specifications where relevant
-   - Include pros and cons lists where relevant
-
-5. Schema Markup:
-   - Include appropriate schema markup (product, FAQ, or review schema as relevant)
-
-# Affiliate Marketing Requirements:
-1. Include strategic affiliate link placements:
-   - After positive reviews
-   - In comparison tables next to prices
-   - At the end of sections with a "View Price" CTA
-   - In the conclusion with recommendations
-
-2. Use optimized CTA texts like:
-   - "View current price"
-   - "View on Bol.com"
-   - "View deal"
-   - "Check availability"
-
-3. Include conversion optimization elements:
-   - Price comparisons between different retailers
-   - Highlight special offers and discounts
-   - Use badges like "Best Choice", "Best Value for Money"
-
-${params.additionalContext ? `Additional Context: ${params.additionalContext}` : ''}
 `;
 
-  // Add type-specific instructions
+  // Add type-specific requirements
   let typeSpecificPrompt = '';
-  switch (params.type) {
-    case 'informational':
-      typeSpecificPrompt = `
-Create an informational blog post that educates the reader about "${params.topic}".
-Include comprehensive information, statistics, and expert insights.
-Structure the content to answer common questions about the topic.
-`;
-      break;
-    case 'listicle':
-      typeSpecificPrompt = `
-Create a listicle-style blog post with a numbered list of items related to "${params.topic}".
-Each list item should have a descriptive heading and detailed explanation.
-Include product recommendations with affiliate links where appropriate.
-`;
-      break;
-    case 'how-to guide':
-      typeSpecificPrompt = `
-Create a step-by-step guide on how to "${params.topic}".
-Each step should be clearly numbered and explained in detail.
-Include tips, warnings, and product recommendations where relevant.
-`;
-      break;
-    case 'anecdote':
-      typeSpecificPrompt = `
-Create a blog post that uses anecdotes and personal experiences related to "${params.topic}".
-The anecdotes should support the main points and make the content more relatable.
-Still include factual information and product recommendations.
-`;
-      break;
-    case 'story':
-      typeSpecificPrompt = `
-Create a narrative-style blog post that tells a story related to "${params.topic}".
-The story should be engaging and lead naturally to product recommendations.
-Include a clear beginning, middle, and end to the narrative.
-`;
-      break;
-  }
-
-  // Add optional elements
+  
+  // Now, add optional elements based on parameters
   let optionalElements = '';
+  
   if (params.firstPerson) {
     optionalElements += `
-Write the blog post in first person using "I" perspective to create a personal connection with the reader.
+Use first-person perspective (I, my, me) throughout the article instead of the editorial we.
 `;
   }
-  if (params.storiesExamples) {
-    optionalElements += `
-Include personal stories or relevant examples throughout the blog post to make it more engaging and relatable.
-`;
-  }
+  
   if (params.hook) {
     optionalElements += `
-Start with an engaging hook that immediately captures the reader's attention and makes them want to continue reading.
+Begin the article with a strong hook that captures attention immediately. This could be a surprising fact, a compelling question, or a bold statement related to ${params.topic}.
 `;
   }
+  
+  if (params.storiesExamples) {
+    optionalElements += `
+Include real-world examples or case studies that illustrate the benefits or applications of ${params.topic}. These stories should make the content more relatable and persuasive.
+`;
+  }
+  
   if (params.interactiveElement) {
     optionalElements += `
-Include an interactive HTML element such as a quiz, calculator, or interactive comparison table related to "${params.topic}".
+Include HTML for an interactive element that enhances user engagement. This could be a simple comparison table, pros/cons list, or a feature checklist that adds value for the reader.
 `;
   }
 
-  // Final output format instructions
-  const outputInstructions = `
-# Output Format:
-1. Start with the blog post title as an H1 heading (using a single # symbol)
-2. On a new line, include "Meta Description: [your meta description here]"
-3. Then provide the complete blog post content with proper HTML formatting
-4. Use markdown formatting for headings, lists, and emphasis
-5. Include appropriate schema markup in JSON-LD format at the end
+  if (params.faq) {
+    optionalElements += `
+Include a "Frequently Asked Questions" section at the end of the article with at least 5 common questions about ${params.topic} and detailed answers. These questions should address common concerns, misconceptions, or decision points related to ${params.targetKeyword}. Make the FAQ section helpful for users still in the research phase of the buying journey.
+`;
+  }
 
-Now, create the complete blog post based on these requirements.
+  // Fill in the optional elements if any
+  if (optionalElements) {
+    typeSpecificPrompt += `
+# Additional Elements to Include:
+${optionalElements}
+`;
+  }
+
+  // Output instructions for formatting
+  const outputInstructions = `
+# Output Format Instructions:
+1. Start the blog post with an H1 heading (using a single #) containing the title.
+2. After the title, include "Meta Description: [your meta description]" 
+3. Then proceed with the blog post structure, using proper markdown heading levels.
+4. Include 2-4 sections with H2 headings.
+5. Use H3 and H4 for subsections as appropriate.
+6. Include a conclusion section.
+7. Format the article with proper markdown, including bold, bullet points, and numbered lists where appropriate.
+8. Format any product recommendations with clear headings, brief descriptions, and placeholder links.
 `;
 
-  return basePrompt + typeSpecificPrompt + optionalElements + outputInstructions;
+  return basePrompt + typeSpecificPrompt + outputInstructions;
 }

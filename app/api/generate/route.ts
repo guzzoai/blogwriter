@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
       storiesExamples: body.storiesExamples || false,
       hook: body.hook || false,
       interactiveElement: body.interactiveElement || false,
+      faq: body.faq || false,
     };
 
     // Generate content - this will return demo content if API key is missing or invalid
@@ -56,6 +57,7 @@ export async function POST(request: NextRequest) {
         stories_examples: params.storiesExamples,
         hook: params.hook,
         interactive_element: params.interactiveElement,
+        faq: params.faq,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
@@ -95,6 +97,7 @@ export async function POST(request: NextRequest) {
         stories_examples: params.storiesExamples,
         hook: params.hook,
         interactive_element: params.interactiveElement,
+        faq: params.faq,
       });
 
       return NextResponse.json({ 

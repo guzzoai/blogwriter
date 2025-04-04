@@ -1,8 +1,59 @@
 @import "tailwindcss";
 
+/* Default light theme variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f9fa;
+  --foreground: #1a1a1a;
+  --form-bg: #ffffff;
+  --form-input-bg: #f5f5f5;
+  --form-border: #d1d5db;
+  --form-text: #333333;
+  --form-placeholder: #9ca3af;
+  --form-label: #4b5563;
+  --table-bg: #ffffff;
+  --table-header-bg: #f3f4f6;
+  --table-row-hover: #f9fafb;
+  --table-border: #e5e7eb;
+  --table-text: #333333;
+  --card-bg: #ffffff;
+  --card-text: #333333;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --sidebar-bg: #1f2937;
+  --sidebar-text: #f3f4f6;
+  --sidebar-muted: #9ca3af;
+  --sidebar-hover: #374151;
+  --type-badge-bg: #dbeafe;
+  --type-badge-text: #1e40af;
+  --icon-color: #4b5563;
+  --howitworks-bg: #f3f4f6;
+}
+
+/* Dark theme variables */
+.dark-theme {
+  --background: #121212;
+  --foreground: #f0f0f0;
+  --form-bg: #1e1e1e;
+  --form-input-bg: #2a2a2a;
+  --form-border: #3a3a3a;
+  --form-text: #e0e0e0;
+  --form-placeholder: #a0a0a0;
+  --form-label: #d0d0d0;
+  --table-bg: #1e1e1e;
+  --table-header-bg: #252525;
+  --table-row-hover: #2c2c2c;
+  --table-border: #3a3a3a;
+  --table-text: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --card-text: #e0e0e0;
+  --sidebar-bg: #1e1e1e;
+  --sidebar-text: #f9fafb;
+  --sidebar-muted: #9ca3af;
+  --sidebar-hover: #2a2a2a;
+  --type-badge-bg: #1e3a8a;
+  --type-badge-text: #dbeafe;
+  --icon-color: #e0e0e0;
+  --howitworks-bg: #1e1e1e;
 }
 
 @theme inline {
@@ -12,17 +63,33 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--form-border);
+  background-color: var(--card-bg);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--form-input-bg);
 }
 
 /* Tailwind Typography styles are added via the plugin in tailwind.config.js */
@@ -33,6 +100,7 @@ body {
   margin-top: 1.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
+  color: var(--foreground);
 }
 
 .prose h2 {
@@ -40,6 +108,7 @@ body {
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
   font-weight: 600;
+  color: var(--foreground);
 }
 
 .prose h3 {
@@ -47,6 +116,7 @@ body {
   margin-top: 1.25rem;
   margin-bottom: 0.75rem;
   font-weight: 600;
+  color: var(--foreground);
 }
 
 .prose table {
@@ -58,18 +128,223 @@ body {
 .prose table th,
 .prose table td {
   padding: 0.75rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--table-border);
+  color: var(--table-text);
 }
 
 .prose table th {
-  background-color: #f9fafb;
+  background-color: var(--table-header-bg);
   font-weight: 600;
 }
 
 .prose blockquote {
-  border-left: 4px solid #e5e7eb;
+  border-left: 4px solid var(--form-border);
   padding-left: 1rem;
   font-style: italic;
   margin: 1.5rem 0;
-  color: #4b5563;
+  color: var(--form-placeholder);
+}
+
+/* Global form elements */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea {
+  background-color: var(--form-input-bg);
+  color: var(--form-text);
+  border: 1px solid var(--form-border);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Select elements */
+select {
+  appearance: auto;
+  background-color: var(--form-input-bg);
+  color: var(--form-text);
+  border: 1px solid var(--form-border);
+  padding: 0.5rem 0.75rem;
+  padding-right: 2rem;
+  border-radius: 0.375rem;
+}
+
+select option {
+  background-color: var(--form-input-bg);
+  color: var(--form-text);
+  padding: 0.5rem;
+}
+
+/* Placeholder text */
+::placeholder {
+  color: var(--form-placeholder);
+  opacity: 1;
+}
+
+/* Form labels */
+label {
+  color: var(--form-label);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th {
+  background-color: var(--table-header-bg);
+  text-align: left;
+  padding: 0.75rem;
+  font-weight: 600;
+  color: var(--foreground);
+  border-bottom: 1px solid var(--table-border);
+}
+
+table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--table-border);
+  color: var(--foreground);
+}
+
+table tr:hover {
+  background-color: var(--table-row-hover);
+}
+
+/* Tailwind override classes */
+.bg-white {
+  background-color: var(--card-bg) !important;
+}
+
+.text-gray-900 {
+  color: var(--foreground) !important;
+}
+
+.text-gray-700 {
+  color: var(--form-label) !important;
+}
+
+.text-gray-600,
+.text-gray-500 {
+  color: var(--form-placeholder) !important;
+}
+
+.border-gray-200 {
+  border-color: var(--form-border) !important;
+}
+
+.divide-gray-200 > * + * {
+  border-color: var(--table-border) !important;
+}
+
+.bg-gray-50 {
+  background-color: var(--table-header-bg) !important;
+}
+
+.hover\:bg-gray-50:hover {
+  background-color: var(--table-row-hover) !important;
+}
+
+.bg-blue-600 {
+  background-color: var(--accent) !important;
+}
+
+.hover\:bg-blue-700:hover {
+  background-color: var(--accent-hover) !important;
+}
+
+/* New override for type badge */
+.bg-blue-100 {
+  background-color: var(--type-badge-bg) !important;
+  color: var(--type-badge-text) !important;
+}
+
+.text-blue-800 {
+  color: var(--type-badge-text) !important;
+}
+
+/* How it works section */
+.bg-gray-100 {
+  background-color: var(--howitworks-bg) !important;
+}
+
+/* Icon colors */
+svg {
+  color: inherit;
+}
+
+button svg, 
+a svg {
+  color: inherit;
+}
+
+.dashboard-icon {
+  color: var(--icon-color) !important;
+}
+
+/* Dark form specific styles */
+.dark-form input,
+.dark-form select,
+.dark-form textarea {
+  background-color: var(--form-input-bg);
+  color: var(--form-text);
+  border-color: var(--form-border);
+}
+
+/* Sidebar styles */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+}
+
+.sidebar-subtitle {
+  color: var(--sidebar-muted);
+}
+
+.sidebar-link {
+  color: var(--sidebar-text);
+  transition: background-color 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: var(--sidebar-hover);
 }
