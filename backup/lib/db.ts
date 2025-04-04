@@ -45,6 +45,8 @@ export type BlogPost = {
   stories_examples: boolean;
   hook: boolean;
   interactive_element: boolean;
+  interactive_element_code?: string;
+  faq: boolean;
 };
 
 // In-memory cache of demo posts (will be synchronized with our file-based storage)
@@ -67,6 +69,8 @@ const PREDEFINED_DEMO_POSTS: BlogPost[] = [
     stories_examples: true,
     hook: true,
     interactive_element: false,
+    interactive_element_code: undefined,
+    faq: false,
     created_at: '2025-04-01T12:00:00Z',
     updated_at: '2025-04-01T12:00:00Z',
   },
@@ -85,6 +89,48 @@ const PREDEFINED_DEMO_POSTS: BlogPost[] = [
     stories_examples: true,
     hook: true,
     interactive_element: true,
+    interactive_element_code: `<div class="coffee-comparison-tool">
+  <h3>Coffee Machine Comparison Tool</h3>
+  <div class="comparison-form">
+    <div class="form-row">
+      <label for="budgetRange">Your Budget:</label>
+      <input type="range" id="budgetRange" min="50" max="1000" value="500" step="50">
+      <span id="budgetValue">$500</span>
+    </div>
+    <div class="form-row">
+      <label>Machine Type:</label>
+      <select id="machineType">
+        <option value="espresso">Espresso Machine</option>
+        <option value="drip">Drip Coffee Maker</option>
+        <option value="pod">Pod/Capsule Machine</option>
+        <option value="french">French Press</option>
+      </select>
+    </div>
+    <button id="findMachines" class="compare-button">Find My Perfect Coffee Machine</button>
+  </div>
+  <div id="resultsContainer" class="results-container"></div>
+</div>
+<script>
+  // This would be replaced with actual functionality in a real implementation
+  document.getElementById('budgetRange').addEventListener('input', function() {
+    document.getElementById('budgetValue').textContent = '$' + this.value;
+  });
+  
+  document.getElementById('findMachines').addEventListener('click', function() {
+    const budget = document.getElementById('budgetRange').value;
+    const type = document.getElementById('machineType').value;
+    
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '<h4>Recommended Coffee Machines</h4>' +
+      '<p>Based on your budget of $' + budget + ' and preference for ' + type + ' machines:</p>' +
+      '<ul>' +
+      '<li>Coffee Machine Model X - $' + (budget - 100) + '</li>' +
+      '<li>Premium Model Y - $' + budget + '</li>' +
+      '<li>Budget-friendly Model Z - $' + (budget / 2) + '</li>' +
+      '</ul>';
+  });
+</script>`,
+    faq: true,
     created_at: '2025-03-15T10:30:00Z',
     updated_at: '2025-03-15T10:30:00Z',
   },

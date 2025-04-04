@@ -131,7 +131,7 @@ export default function PostList() {
           <input
             type="text"
             placeholder="Search by title or keyword..."
-            className="w-full sm:w-80 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full sm:w-80 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -145,22 +145,22 @@ export default function PostList() {
       </div>
 
       {sortedPosts.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-lg shadow">
-          <h3 className="text-lg font-medium text-gray-900">No blog posts found</h3>
-          <p className="mt-2 text-gray-500">
+        <div className="text-center py-12 rounded-lg shadow">
+          <h3 className="text-lg font-medium">No blog posts found</h3>
+          <p className="mt-2">
             {searchTerm
               ? 'No posts match your search criteria'
               : 'Create your first blog post to get started'}
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white rounded-lg shadow">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="overflow-x-auto rounded-lg shadow">
+          <table className="min-w-full divide-y">
+            <thead>
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer"
                   onClick={() => toggleSort('title')}
                 >
                   <div className="flex items-center">
@@ -174,7 +174,7 @@ export default function PostList() {
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer"
                   onClick={() => toggleSort('target_keyword')}
                 >
                   <div className="flex items-center">
@@ -188,7 +188,7 @@ export default function PostList() {
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider cursor-pointer"
                   onClick={() => toggleSort('created_at')}
                 >
                   <div className="flex items-center">
@@ -202,33 +202,38 @@ export default function PostList() {
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
                 >
                   Type
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider"
                 >
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y">
               {sortedPosts.map((post) => (
                 <tr key={post.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
-                      {post.title}
+                    <div className="text-sm font-medium">
+                      <Link 
+                        href={`/posts/${post.id}`}
+                        className="text-gray-900 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                      >
+                        {post.title}
+                      </Link>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm">
                       {post.target_keyword}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm">
                       {new Date(post.created_at).toLocaleDateString()}
                     </div>
                   </td>
@@ -244,28 +249,28 @@ export default function PostList() {
                         className="text-blue-600 hover:text-blue-900"
                         title="View"
                       >
-                        <Eye className="h-5 w-5" />
+                        <Eye className="h-5 w-5 dashboard-icon" />
                       </Link>
                       <Link
                         href={`/posts/${post.id}/edit`}
                         className="text-indigo-600 hover:text-indigo-900"
                         title="Edit"
                       >
-                        <Edit className="h-5 w-5" />
+                        <Edit className="h-5 w-5 dashboard-icon" />
                       </Link>
                       <button
                         onClick={() => handleExport(post, 'html')}
                         className="text-green-600 hover:text-green-900"
                         title="Export as HTML"
                       >
-                        <FileDown className="h-5 w-5" />
+                        <FileDown className="h-5 w-5 dashboard-icon" />
                       </button>
                       <button
                         onClick={() => handleDelete(post.id)}
                         className="text-red-600 hover:text-red-900"
                         title="Delete"
                       >
-                        <Trash2 className="h-5 w-5" />
+                        <Trash2 className="h-5 w-5 dashboard-icon" />
                       </button>
                     </div>
                   </td>

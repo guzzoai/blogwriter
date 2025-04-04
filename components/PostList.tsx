@@ -219,7 +219,12 @@ export default function PostList() {
                 <tr key={post.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium">
-                      {post.title}
+                      <Link 
+                        href={`/posts/${post.id}`}
+                        className="text-gray-900 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                      >
+                        {post.title}
+                      </Link>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
